@@ -1,8 +1,5 @@
 package com.accenture.remoterevolution.autohaus.commando;
 
-import com.accenture.remoterevolution.autohaus.Auto;
-import com.accenture.remoterevolution.autohaus.Kraftfahrzeug;
-import com.accenture.remoterevolution.autohaus.Motorrad;
 import com.accenture.remoterevolution.autohaus.entities.AH_Autohaus;
 
 import java.sql.Connection;
@@ -11,44 +8,42 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
-public class ShowIDCommand implements Command {
-    //private List<Kraftfahrzeug> fahrzeuge;
+public class ShowDataCommand implements Command {
     private Scanner scanner;
     private Connection connection;
 
-    public ShowIDCommand(Connection connection, Scanner scanner) {
-        //this.fahrzeuge = fahrzeuge;
+    public ShowDataCommand(Connection connection, Scanner scanner) {
         this.connection = connection;
         this.scanner = scanner;
     }
 
     @Override
     public boolean shouldExecute(String command) {
-        return ("showID".equalsIgnoreCase(command));
+        return ("showA".equalsIgnoreCase(command));
     }
 
     @Override
     public boolean execute() {
-        Long id = null;
-        System.out.println("Welche ID?");
-        try {
-            id = Long.parseLong(scanner.nextLine());
+        String request = null;
+        System.out.println("Was möchten Sie sehen?");
+        request = scanner.nextLine();
 
-        } catch (Exception e) {
-            if (id != null)
-                System.out.println(id.toString() + " ist keine gültige ID!");
-            else System.out.println("Ungültige Eingabe!");
-            return true;
+
+        switch (request) {
+            case "autohaus":
         }
+
+
         List<AH_Autohaus> autohaus = null;
-        try {
-            autohaus = readAutohausById(connection, id);
+        /*try {
+            autohaus = readAutohausById(connection);
         } catch (SQLException ex) {
             System.out.println("Could not read Autohaus");
             return true;
-        }
+        }**/
         for (AH_Autohaus autohau : autohaus) {
             System.out.println("Autohaus-ID: " + autohau.getAutohausId() + ", Autohaus-Adresse: " + autohau.getAutohausAdresse());
         }

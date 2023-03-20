@@ -4,19 +4,24 @@ import com.accenture.remoterevolution.autohaus.commando.*;
 
 import javax.sound.midi.Soundbank;
 import javax.swing.plaf.synth.SynthOptionPaneUI;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
  * Hello world!
  */
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+
+        Connector c = new Connector();
+        Connection connection = c.getConnection();
 
         List<Kraftfahrzeug> fahrzeuge = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         AddCommand addCommand = new AddCommand(scanner, fahrzeuge);
-        ShowCommand showCommand = new ShowCommand(fahrzeuge);
-        ShowIDCommand showIdCommand = new ShowIDCommand(fahrzeuge, scanner);
+        ShowCommand showCommand = new ShowCommand(connection);
+        ShowIDCommand showIdCommand = new ShowIDCommand(connection, scanner);
         ExitCommand exitCommand = new ExitCommand();
         HelpCommand helpCommand = new HelpCommand();
         DeleteCommand deleteCommand = new DeleteCommand(scanner, fahrzeuge);
